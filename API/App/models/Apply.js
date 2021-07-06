@@ -48,7 +48,7 @@ schema.methods.toJSON = function () {
     const apply = this
     const applyObject = apply.toObject()
     
-    const url = `/uploads/`+ applyObject.cv_file;
+    const url = `/api/uploads/`+ applyObject.cv_file;
     if (applyObject.cv_file) {
         delete applyObject.cv_file;
         applyObject.cv_url = url;
