@@ -15,7 +15,7 @@ app.use(fileUpload({
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended : false}));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
+app.use(`${process.env.BASE_URL}`+'/uploads', express.static(path.join(__dirname, 'uploads')))
 
 //================================== Routes ==================================\\
 app.use(`${process.env.BASE_URL}`+'/apply',require('./routers/apply'))
