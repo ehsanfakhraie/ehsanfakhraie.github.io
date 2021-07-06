@@ -7,5 +7,5 @@ mongoose.connect(`${process.env.URI}`, {
 }).then(()=>{
     console.log("Everything is fine")
 }).catch((ex)=>{
-    console.log("Connection Error (Database)")
+    console.log("Connection Error (Database) " + ex)
 });

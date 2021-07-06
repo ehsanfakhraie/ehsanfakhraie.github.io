@@ -162,7 +162,6 @@
                           <div class="col-md-12">
                             <label class="text-black" for="message">انگیزه شما</label>
                             <textarea name="message" id="message" cols="30" rows="7" class="form-control" placeholder="انگیزه خود را اینجا بنویسید..."></textarea>
-                            <!-- <input type="subject" id="subject" class="form-control" placeholder="پول"> -->
                           </div>
                         </div>
             
@@ -174,6 +173,11 @@
                         </div>
 
                         <br>
+
+                        <div id="submit_message" style="display: none;" class="alert" role="alert">
+                          
+                        </div>
+                        
             
                         <div class="row form-group" style="text-align: center;">
                           <div class="col-md-12">
@@ -263,14 +267,42 @@
     $(document).ready(function(){
         $(".send").click(function(e){
             e.preventDefault()
+            $("#submit_message").removeClass("alert-danger alert-success").text("")
+            $(".send").prop('disabled', true)
             let fname = $("#fname").val()
             let lname = $("#lname").val()
             let email = $("#email").val()
             let major = $("#major").val()
             let age = $("#age").val()
             let subject = $("#message").val()
-            // let 
-            // alert(fname)
+            let file = $("#myfile")
+            //AXIOS
+            let form = new FormData();
+            form.append("cv_file", $('input[type=file]')[0].files[0]);
+            form.append("first_name", fname);
+            form.append("last_name", lname);
+            form.append("email", email);
+            form.append("major", major);
+            form.append("age", age);
+            form.append("description", subject);
+            let settings = {
+              "url": "http://localhost:3000/api/apply",
+              "method": "POST",
+              "processData": false,
+              "mimeType": "multipart/form-data",
+              "contentType": false,
+              "data": form
+            };
+
+            $.ajax(settings).done(function (response) {
+              $(".send").prop('disabled', false)
+              $("#submit_message").addClass("alert-success").css("display","").text("اطلاعات با موفقیت ارسال شد، منتظر تماس ما باشید...")
+              console.log(response)
+            
+            }).fail(function(xhr, status, error) {
+                $(".send").prop('disabled', false)
+                $("#submit_message").addClass("alert-danger").css("display","").text("مشکلی در ارتباط با سرور وجود دارد، لطفا مجددا تلاش کنید")
+            });
         });
     });
 </script>
