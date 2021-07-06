@@ -34,10 +34,10 @@ services:
     depends_on:
       - mongo
     volumes:
-      - ./App:/usr/src/app
+      - ./App/uploads:/usr/src/app/uploads
     ports:
       - 3000:3000
-    # command: npm run start
+    command: npm run start
 
 volumes:
   dbdata:
