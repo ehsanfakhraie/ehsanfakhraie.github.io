@@ -5,6 +5,10 @@
     direction: rtl;
 }
 
+.error{
+    color:red;
+}
+
 body {
     line-height: 1.7;
     color: #4d4d4d;
