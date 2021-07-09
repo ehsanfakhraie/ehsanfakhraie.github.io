@@ -38,7 +38,7 @@ router.post("/", async (req, res) => {
 
 router.get("/", authenticateAdmin , async (req, res) => {
     try {
-        const applies = await Apply.find();
+        const applies = await Apply.find().populate("opportunity");
         res.send(applies);
     } catch (err) {
         res.status(500).send(err.message);
