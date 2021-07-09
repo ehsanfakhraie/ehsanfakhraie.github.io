@@ -20,5 +20,6 @@ app.use(`${process.env.BASE_URL}`+'/uploads', express.static(path.join(__dirname
 //================================== Routes ==================================\\
 app.use(`${process.env.BASE_URL}`+'/apply',require('./routers/apply'))
 app.use(`${process.env.BASE_URL}`+'/admin',require('./routers/superuser'))
+app.use(`${process.env.BASE_URL}`+'/opportunity',require('./routers/opportunity'))
 
 module.exports = app;

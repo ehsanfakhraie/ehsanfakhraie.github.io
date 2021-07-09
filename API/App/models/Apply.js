@@ -37,12 +37,16 @@ const schema = new mongoose.Schema({
     },
     cv_file:{
         type: String
+    },
+    opportunity:{
+        type: mongoose.Types.ObjectId,
+        ref: "Opportunity",
+        required: true
     }
 }, {
     timestamps: true
 });
 
-// http://localhost:3000/uploads/60e33bc8d3f06d2355ef01b8/9713015_q4.pdf
 
 schema.methods.toJSON = function () {
     const apply = this
