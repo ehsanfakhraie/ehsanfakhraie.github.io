@@ -30,17 +30,20 @@
 
     <link rel="stylesheet" href="css/style.css" />
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-201786788-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-201786788-1"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-  gtag('config', 'UA-201786788-1');
-</script>
-
-
+      gtag("config", "UA-201786788-1");
+    </script>
   </head>
   <body
     data-spy="scroll"
@@ -405,7 +408,7 @@
     <script src="js/main.js"></script>
 
     <script>
-      let base = "https://gozar.link/api"
+      let base = "https://gozar.link/api";
 
       $(document).ready(function () {
         //======== Load List of opportunities
@@ -438,7 +441,6 @@
             form.append("age", age);
             form.append("description", subject);
             form.append("opportunity", opportunity);
-
 
             let settings = {
               url: base + "/apply/",
@@ -551,7 +553,9 @@
           };
           $.ajax(settings).done(function (response) {
             response.forEach((opportunity) => {
-              $("#opportunity").append(new Option(opportunity.name, opportunity._id));
+              $("#opportunity").append(
+                new Option(opportunity.name, opportunity._id)
+              );
             });
           });
         }
