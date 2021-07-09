@@ -246,6 +246,20 @@
                       </div>
                     </div>
 
+                    <div class="form-group">
+                      <label for="opportunity" class="text-black">موقعیت</label>
+                      <select
+                        required
+                        name="opportunity"
+                        class="form-control"
+                        id="opportunity"
+                      >
+                        <option disabled selected hidden>
+                          لطفا یک موقعیت شغلی را انتخاب کنید
+                        </option>
+                      </select>
+                    </div>
+
                     <div class="row form-group">
                       <div class="col-md-12">
                         <label class="text-black" for="message"
@@ -379,65 +393,76 @@
     <script src="js/main.js"></script>
 
     <script>
+      let base = "https://gozar.link/api"
+
       $(document).ready(function () {
+        //======== Load List of opportunities
+
+        getOpportunities();
+
         $.validator.setDefaults({
           submitHandler: function () {
             // e.preventDefault();
-          $("#submit_message")
-            .removeClass("alert-danger alert-success")
-            .text("");
-          $(".send").prop("disabled", true);
-          let fname = $("#fname").val();
-          let lname = $("#lname").val();
-          let email = $("#email").val();
-          let major = $("#major").val();
-          let age = $("#age").val();
-          let subject = $("#message").val();
-          let file = $("#myfile");
-          //AXIOS
-          let form = new FormData();
-          form.append("cv_file", $("input[type=file]")[0].files[0]);
-          form.append("first_name", fname);
-          form.append("last_name", lname);
-          form.append("email", email);
-          form.append("major", major);
-          form.append("age", age);
-          form.append("description", subject);
-          let settings = {
-            url: "https://gozar.link/api/apply/",
-            method: "POST",
-            processData: false,
-            mimeType: "multipart/form-data",
-            contentType: false,
-            data: form,
-          };
+            $("#submit_message")
+              .removeClass("alert-danger alert-success")
+              .text("");
+            $(".send").prop("disabled", true);
+            let fname = $("#fname").val();
+            let lname = $("#lname").val();
+            let email = $("#email").val();
+            let major = $("#major").val();
+            let age = $("#age").val();
+            let subject = $("#message").val();
+            let opportunity = $("#opportunity").val();
+            let file = $("#myfile");
 
-          $.ajax(settings)
-            .done(function (response) {
-              $(".send").prop("disabled", false);
-              $("#submit_message")
-                .addClass("alert-success")
-                .css("display", "")
-                .text("اطلاعات با موفقیت ارسال شد، منتظر تماس ما باشید...");
-            })
-            .fail(function (xhr, status, error) {
-              $(".send").prop("disabled", false);
-              console.log(xhr.status);
-              $("#submit_message")
-                .addClass("alert-danger")
-                .css("display", "")
-                .text(
-                  "مشکلی در ارتباط با سرور وجود دارد، لطفا مجددا تلاش کنید"
-                );
-            });
+            //AXIOS
+            let form = new FormData();
+            form.append("cv_file", $("input[type=file]")[0].files[0]);
+            form.append("first_name", fname);
+            form.append("last_name", lname);
+            form.append("email", email);
+            form.append("major", major);
+            form.append("age", age);
+            form.append("description", subject);
+            form.append("opportunity", opportunity);
 
+
+            let settings = {
+              url: base + "/apply/",
+              method: "POST",
+              processData: false,
+              mimeType: "multipart/form-data",
+              contentType: false,
+              data: form,
+            };
+
+            $.ajax(settings)
+              .done(function (response) {
+                $(".send").prop("disabled", false);
+                $("#submit_message")
+                  .addClass("alert-success")
+                  .css("display", "")
+                  .text("اطلاعات با موفقیت ارسال شد، منتظر تماس ما باشید...");
+              })
+              .fail(function (xhr, status, error) {
+                $(".send").prop("disabled", false);
+                $("#submit_message")
+                  .addClass("alert-danger")
+                  .css("display", "")
+                  .text(
+                    "مشکلی در ارتباط با سرور وجود دارد، لطفا مجددا تلاش کنید"
+                  );
+              });
           },
         });
 
         $.validator.addMethod(
           "filesize",
           function (value, element, param) {
-            return this.optional(element) || (element.files[0].size <= param * 1000000)
+            return (
+              this.optional(element) || element.files[0].size <= param * 1000000
+            );
           },
           "سایز فایل باید کوچکتر از {0} مگابایت باشد"
         );
@@ -468,7 +493,10 @@
             },
             myfile: {
               required: true,
-              filesize: 30
+              filesize: 30,
+            },
+            opportunity: {
+              required: true,
             },
           },
           messages: {
@@ -491,6 +519,9 @@
               max: "حداکثر سن میتواند 99 سال باشد",
               min: "حداقل سن میتواند 16 سال باشد",
             },
+            opportunity: {
+              required: "این فیلد اجباری است",
+            },
             message: {
               required: "لطفا انگیزه خود را بنویسید",
             },
@@ -500,10 +531,18 @@
           },
         });
 
-        // $("#applyform").validate()
-
-        // $(".send").click(function (e) {
-        //           });
+        function getOpportunities() {
+          let settings = {
+            url: base + "/opportunity",
+            method: "GET",
+            timeout: 0,
+          };
+          $.ajax(settings).done(function (response) {
+            response.forEach((opportunity) => {
+              $("#opportunity").append(new Option(opportunity.name, opportunity._id));
+            });
+          });
+        }
       });
     </script>
   </body>
