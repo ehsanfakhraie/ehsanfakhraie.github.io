@@ -2340,6 +2340,18 @@ h1, h2, h3, h4, h5, h6,input, textarea {
 .testimonial-wrap .owl-nav {
     display: none;
 }
+/* 
+.sidebar {
+
+    position: fixed;
+    overflow-x: hidden;
+    z-index: 1;
+    justify-content: center;
+    height: 900px;
+    top: 50%;
+    left: 0%;
+    bottom: 90%;
+} */
 
 .sidebar-box {
     margin-bottom: 30px;
@@ -2491,3 +2503,4 @@ h1, h2, h3, h4, h5, h6,input, textarea {
     color: #fff;
     border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
+  
