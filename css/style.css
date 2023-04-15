@@ -2242,6 +2242,15 @@ h1, h2, h3, h4, h5, h6,input, textarea {
     font-weight: 900;
     color: #f2f4f5;
 }
+.box-with-humber .number-behind-en {
+    font-size: 8rem;
+    position: absolute;
+    z-index: -1;
+    top: -4rem;
+    left: 0;
+    font-weight: 900;
+    color: #f2f4f5;
+}
 
 .media-1 {
     position: relative;
