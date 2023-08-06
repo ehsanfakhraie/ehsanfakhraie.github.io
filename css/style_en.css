@@ -1,0 +1,6 @@
+/* Base */
+@import url(style.css);
+
+* {
+    direction: ltr;
+}
